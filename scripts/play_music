@@ -1,0 +1,40 @@
+alias: Play Music
+sequence:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ 'album' in name.lower() }}"
+        sequence:
+          - data:
+              media_type: album
+              enqueue: replace
+              media_id: "{{ name }}"
+              entity_id: "{{ domain }}"
+            action: music_assistant.play_media
+      - conditions:
+          - condition: template
+            value_template: "{{ 'playlist' in name.lower() }}"
+        sequence:
+          - data:
+              media_type: playlist
+              enqueue: replace
+              media_id: "{{ name }}"
+              entity_id: "{{ domain }}"
+            action: music_assistant.play_media
+    default:
+      - data:
+          media_type: track
+          enqueue: replace
+          media_id: "{{ name }}"
+          radio_mode: true
+          entity_id: "{{ domain }}"
+        action: music_assistant.play_media
+fields:
+  name:
+    description: The title of the song, album, artist, or playlist to play.
+    example: Greatest Hits album
+  domain:
+    selector:
+      text: null
+    description: The media player
+    required: true
