@@ -1,0 +1,22 @@
+WeatherForecast:
+  description: >
+    This function fetches and returns the daily weather forecast/conditions.
+  action:
+    - service: script.weather_forecast
+      response_variable: daily_summary
+    - stop: ""
+      response_variable: daily_summary
+  speech:
+    text: >
+      The weather summary is: {{ action_response }}
+PlayMusic:
+  description: >
+    This function plays music.
+  action:
+    - service: script.play_music
+      data:
+        name: "{{ name }}"
+        domain: "{{ domain }}"
+  speech:
+    text: >
+      Playing "{{ name }}" on "{{ domain }}".
