@@ -1,0 +1,36 @@
+alias: Weather Forecast
+sequence:
+  - action: weather.get_forecasts
+    metadata: {}
+    data:
+      type: daily
+    response_variable: forecast_data
+    target:
+      entity_id: weather.pirateweather
+  - variables:
+      days_of_week:
+        - Sunday
+        - Monday
+        - Tuesday
+        - Wednesday
+        - Thursday
+        - Friday
+        - Saturday
+      today: "{{ now().strftime('%A') }}"
+      forecast_data_dict: >
+        {% set forecasts = forecast_data['weather.pirateweather']['forecast']
+        %}   
+
+        {% set start_index = days_of_week.index(today) %}    
+
+        {
+          "forecast": [
+            {% for i in range(forecasts | length) %}
+              {{ dict(forecasts[i], datetime=days_of_week[(start_index + i) % days_of_week | length]) }}
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+          ]
+        }
+  - stop: Returning forecast dictionary
+    response_variable: forecast_data_dict
+description: Fetches and returns the forecast dictionary with day names.
