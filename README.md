@@ -13,6 +13,10 @@ This repository contains intent scripts that I'm developing for Home Assistant c
 2. **Create the Script File**  
    Ensure you have a `intent_script.yaml` file in your Home Assistant `config` directory.
 
+3. **Additional Scripts**  
+   Scripts located in the `scripts` folder should be added to the `scripts` section under Automations & Scenes in Home Assistant.  
+   **Note:** These scripts may require adjustments to match your specific entities.
+
 ## Updates and Future Plans
 
 I plan to regularly update these scripts and may add more that align with my interests. Stay tuned for improvements and new features!
