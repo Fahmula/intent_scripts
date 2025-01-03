@@ -1,5 +1,7 @@
 alias: Play Music
 sequence:
+  - variables:
+      _entity: "{{ entity if 'media_player' in entity else 'media_player.' ~ entity }}"
   - choose:
       - conditions:
           - condition: template
@@ -9,7 +11,7 @@ sequence:
               media_type: album
               enqueue: replace
               media_id: "{{ name }}"
-              entity_id: "{{ domain }}"
+              entity_id: "{{ _entity }}"
             action: music_assistant.play_media
       - conditions:
           - condition: template
@@ -19,7 +21,7 @@ sequence:
               media_type: playlist
               enqueue: replace
               media_id: "{{ name }}"
-              entity_id: "{{ domain }}"
+              entity_id: "{{ _entity }}"
             action: music_assistant.play_media
     default:
       - data:
@@ -27,14 +29,16 @@ sequence:
           enqueue: replace
           media_id: "{{ name }}"
           radio_mode: true
-          entity_id: "{{ domain }}"
+          entity_id: "{{ _entity }}"
         action: music_assistant.play_media
 fields:
   name:
     description: The title of the song, album, artist, or playlist to play.
     example: Greatest Hits album
-  domain:
+    required: true
+  entity:
     selector:
       text: null
     description: The media player
     required: true
+description: ""
