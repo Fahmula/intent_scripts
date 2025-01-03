@@ -9,14 +9,17 @@ WeatherForecast:
   speech:
     text: >
       The weather summary is: {{ action_response }}
+      
 PlayMusic:
   description: >
-    This function plays music.
+    This function plays music and requires both the "name" and "entity parameters".
+
   action:
     - service: script.play_music
       data:
         name: "{{ name }}"
-        domain: "{{ domain }}"
+        entity: "{{ entity }}"
+        
   speech:
     text: >
-      Playing "{{ name }}" on "{{ domain }}".
+      Playing "{{ name }}" on "{{ entity }}".

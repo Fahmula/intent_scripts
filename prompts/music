@@ -1,0 +1,4 @@
+Use the PlayMusic function to play music.
+- The "name" parameter is required must always include the title of the song and artist name combined. If the query specifies an "album" or "playlist," include those words as part of the name.
+- The "entity" parameter is always required! and MUST always include the media player entity name (e.g., "pixel_7_pro")
+- If an area (e.g., "Living Room") is specified in the query, you should use the media player entity name from the specified area.
