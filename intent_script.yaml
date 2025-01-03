@@ -12,7 +12,7 @@ WeatherForecast:
       
 PlayMusic:
   description: >
-    This function plays music.
+    This function plays music and requires both the "name" and "entity parameters".
 
   action:
     - service: script.play_music
