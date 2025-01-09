@@ -1,44 +1,43 @@
 alias: Play Music
 sequence:
   - variables:
-      _entity: "{{ entity if 'media_player' in entity else 'media_player.' ~ entity }}"
+      _entity: "{{ media_player }}"
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ 'album' in name.lower() }}"
+            value_template: "{{ 'album' in query.lower() }}"
         sequence:
           - data:
               media_type: album
               enqueue: replace
-              media_id: "{{ name }}"
+              media_id: "{{ query }}"
               entity_id: "{{ _entity }}"
             action: music_assistant.play_media
       - conditions:
           - condition: template
-            value_template: "{{ 'playlist' in name.lower() }}"
+            value_template: "{{ 'playlist' in query.lower() }}"
         sequence:
           - data:
               media_type: playlist
               enqueue: replace
-              media_id: "{{ name }}"
+              media_id: "{{ query }}"
               entity_id: "{{ _entity }}"
             action: music_assistant.play_media
     default:
       - data:
           media_type: track
           enqueue: replace
-          media_id: "{{ name }}"
+          media_id: "{{ query }}"
           radio_mode: true
           entity_id: "{{ _entity }}"
         action: music_assistant.play_media
 fields:
-  name:
+  query:
     description: The title of the song, album, artist, or playlist to play.
     example: Greatest Hits album
     required: true
-  entity:
-    selector:
-      text: null
+  media_player:
+    example: media_player.livin_room
     description: The media player
     required: true
 description: ""

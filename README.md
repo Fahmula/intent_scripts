@@ -5,6 +5,8 @@
 
 This repository contains a collection of intent scripts designed to enhance the conversational abilities of your Home Assistant's voice assistant. These scripts allow for more natural and intuitive interactions with your smart home.
 
+**I'm currently using Qwen2.5:7B (via Ollama) to power these intent scripts!** This model provides excellent language understanding and response generation, making your voice interactions even more seamless.
+
 ## Getting Started
 
 These are the steps required to get the intent scripts working.
@@ -12,7 +14,13 @@ These are the steps required to get the intent scripts working.
 ### Prerequisites
 
 *   **Home Assistant:** Ensure you have a working installation of Home Assistant.
-*   **Music Assistant Integration (Optional):** The `play_music` script requires the [Music Assistant integration](https://www.home-assistant.io/integrations/music_assistant/). Install and configure it if you intend to use this specific script.
+*   **Ollama:** Install and run Ollama. You can find instructions on the [Ollama website](https://ollama.com/).
+*   **Ollama Integration:** Install and configure the Ollama integration in Home Assistant. This allows Home Assistant to communicate with the running Ollama instance. See the [Ollama integration documentation](https://www.home-assistant.io/integrations/ollama/) for instructions.
+*   **Qwen2.5:7B Model:** Pull the Qwen2.5:7B model using the following command in your terminal after installing Ollama:
+    ```bash
+    ollama pull qwen2.5:7b
+    ```
+*   **Music Assistant Integration (Optional):** The play_music script requires the [Music Assistant integration](https://www.home-assistant.io/integrations/music_assistant/). Install and configure it if you intend to use this specific script.
 
 ### Installation
 
@@ -36,4 +44,4 @@ These are the steps required to get the intent scripts working.
 
 ## Usage
 
-Once installed, you can use voice commands to trigger these intents through your configured Home Assistant voice assistant.
+Once installed, you can use voice commands to trigger these intents through your configured Home Assistant voice assistant. Your assistant will now be powered by the Qwen2.5:7B model (from [https://ollama.com/library/qwen2.5:7b](https://ollama.com/library/qwen2.5:7b)) running through Ollama, enabling more advanced and natural language interactions.

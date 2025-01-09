@@ -1,25 +1,32 @@
 WeatherForecast:
   description: >
-    This function fetches and returns the daily weather forecast/conditions.
+    Use this function to get daily weather forecast or conditions.
+    It does not require any parameters.
+
   action:
     - service: script.weather_forecast
       response_variable: daily_summary
     - stop: ""
       response_variable: daily_summary
+
   speech:
     text: >
-      The weather summary is: {{ action_response }}
-      
+      The weather forecast is: {{ action_response }}
+
 PlayMusic:
   description: >
-    This function plays music and requires both the "name" and "entity parameters".
+    Use this function to play music based on the user query.
+    The "query" parameter is required and must always include the title of the song and artist name combined. 
+    If the users query specifies an "album" or "playlist," include those words as part of the query.
+    The "entity_id" parameter is required and must always include the full media player entity ID.
+    If any area (e.g., "Master bedroom") is specified in the query, you must use any full media player entity ID from the list of areas available to you that corresponds to the area in the query.
 
   action:
     - service: script.play_music
       data:
-        name: "{{ name }}"
-        entity: "{{ entity }}"
+        query: "{{ query }}"
+        media_player: "{{ entity_id }}"
         
   speech:
     text: >
-      Playing "{{ name }}" on "{{ entity }}".
+      Playing.
