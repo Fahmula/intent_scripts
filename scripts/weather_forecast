@@ -17,20 +17,19 @@ sequence:
         - Friday
         - Saturday
       today: "{{ now().strftime('%A') }}"
-      forecast_data_dict: >
-        {% set forecasts = forecast_data['weather.pirateweather']['forecast']
-        %}   
-
-        {% set start_index = days_of_week.index(today) %}    
-
-        {
-          "forecast": [
-            {% for i in range(forecasts | length) %}
-              {{ dict(forecasts[i], datetime=days_of_week[(start_index + i) % days_of_week | length]) }}
-              {% if not loop.last %}, {% endif %}
-            {% endfor %}
-          ]
-        }
-  - stop: Returning forecast dictionary
+      start_index: "{{ days_of_week.index(today) }}"
+      forecast_data_dict:
+        forecast: >
+          {% set forecasts = forecast_data['weather.pirateweather']['forecast']
+          %} [ {% for i in range(forecasts | length) %}
+            {
+              {% for key, value in forecasts[i].items() %}
+              "{{ key }}": {{ value | tojson }},
+              "day_of_the_week": "{{ days_of_week[(start_index + i) % days_of_week | length] }}",
+              {% endfor %}
+            }
+            {% if not loop.last %},{% endif %}
+          {% endfor %} ]
+  - stop: Returning complete forecast dictionary with day and short_day
     response_variable: forecast_data_dict
 description: Fetches and returns the forecast dictionary with day names.
