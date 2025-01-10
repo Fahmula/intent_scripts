@@ -1,7 +1,6 @@
 alias: Play Music
+description: Plays music via music assistant
 sequence:
-  - variables:
-      _entity: "{{ media_player }}"
   - choose:
       - conditions:
           - condition: template
@@ -11,7 +10,7 @@ sequence:
               media_type: album
               enqueue: replace
               media_id: "{{ query }}"
-              entity_id: "{{ _entity }}"
+              entity_id: "{{ media_player }}"
             action: music_assistant.play_media
       - conditions:
           - condition: template
@@ -21,7 +20,7 @@ sequence:
               media_type: playlist
               enqueue: replace
               media_id: "{{ query }}"
-              entity_id: "{{ _entity }}"
+              entity_id: "{{ media_player }}"
             action: music_assistant.play_media
     default:
       - data:
@@ -29,7 +28,7 @@ sequence:
           enqueue: replace
           media_id: "{{ query }}"
           radio_mode: true
-          entity_id: "{{ _entity }}"
+          entity_id: "{{ media_player }}"
         action: music_assistant.play_media
 fields:
   query:
@@ -40,4 +39,3 @@ fields:
     example: media_player.livin_room
     description: The media player
     required: true
-description: ""
