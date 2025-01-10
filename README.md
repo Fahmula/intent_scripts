@@ -22,6 +22,12 @@ These are the steps required to get the intent scripts working.
     ```
 *   **Music Assistant Integration (Optional):** The play_music script requires the [Music Assistant integration](https://www.home-assistant.io/integrations/music_assistant/). Install and configure it if you intend to use this specific script.
 
+    Add the entity ID as an alias to your media player entity you exposed to voice assistant:
+
+    ```yaml
+    Full Entity ID: media_player.living_room
+    ```
+
 ### Installation
 
 1. **Enable Intent Scripts:**

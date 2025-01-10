@@ -16,16 +16,16 @@ WeatherForecast:
 PlayMusic:
   description: >
     Use this function to play music based on the user query.
-    The "query" parameter is required and must always include the title of the song and artist name combined. 
+    The "name" parameter is required and must always include the title of the song and artist name combined. 
     If the users query specifies an "album" or "playlist," include those words as part of the query.
-    The "entity_id" parameter is required and must always include the full media player entity ID.
+    The "area" parameter is required and must always include the full media player entity ID.
     If any area (e.g., "Master bedroom") is specified in the query, you must use any full media player entity ID from the list of areas available to you that corresponds to the area in the query.
 
   action:
     - service: script.play_music
       data:
-        query: "{{ query }}"
-        media_player: "{{ entity_id }}"
+        query: "{{ name }}"
+        media_player: "{{ area }}"
         
   speech:
     text: >
