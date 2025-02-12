@@ -1,10 +1,18 @@
 alias: Weather Forecast
+description: Fetches and returns the forecast dictionary with day names.
 sequence:
   - action: weather.get_forecasts
     metadata: {}
     data:
       type: daily
-    response_variable: forecast_data
+    response_variable: forecast_daily
+    target:
+      entity_id: weather.pirateweather
+  - action: weather.get_forecasts
+    metadata: {}
+    data:
+      type: hourly
+    response_variable: forecast_hourly
     target:
       entity_id: weather.pirateweather
   - variables:
@@ -19,17 +27,31 @@ sequence:
       today: "{{ now().strftime('%A') }}"
       start_index: "{{ days_of_week.index(today) }}"
       forecast_data_dict:
-        forecast: >
-          {% set forecasts = forecast_data['weather.pirateweather']['forecast']
-          %} [ {% for i in range(forecasts | length) %}
-            {
-              {% for key, value in forecasts[i].items() %}
-              "{{ key }}": {{ value | tojson }},
+        forecast_daily: >
+          {% set forecasts = forecast_daily['weather.pirateweather']['forecast']
+          %} [{% for i in range(forecasts | length) %} {
+            {% for key, value in forecasts[i].items() %}
+            {% if key == 'datetime' %}
+              {% set local_datetime = (forecasts[i]['datetime'] | as_datetime | as_local) %}
+              "datetime": "{{ local_datetime.strftime('%Y-%m-%d') }}",
+            {% else %}
               "day_of_the_week": "{{ days_of_week[(start_index + i) % days_of_week | length] }}",
-              {% endfor %}
-            }
-            {% if not loop.last %},{% endif %}
-          {% endfor %} ]
-  - stop: Returning complete forecast dictionary with day and short_day
+              "{{ key }}": {{ value | tojson }},
+            {% endif %}
+            {% endfor %}
+          } {% if not loop.last %},{% endif %} {% endfor %}]
+        forecast_hourly: >
+          {% set forecasts =
+          forecast_hourly['weather.pirateweather']['forecast'] %} [{% for i in
+          range(0, 24) %} {
+            {% for key, value in forecasts[i].items() %}
+            {% if key == 'datetime' %}
+              {% set local_datetime = (forecasts[i]['datetime'] | as_datetime | as_local) %}
+              "datetime": "{{ local_datetime.strftime('%Y-%m-%d %H:%M') }}",  {# Use strftime directly on the datetime object #}
+            {% else %}
+              "{{ key }}": {{ value | tojson }},
+            {% endif %}
+            {% endfor %}
+          } {% if not loop.last %},{% endif %} {% endfor %}]
+  - stop: Returning complete forecast dictionary with days
     response_variable: forecast_data_dict
-description: Fetches and returns the forecast dictionary with day names.
