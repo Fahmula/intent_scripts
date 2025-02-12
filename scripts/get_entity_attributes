@@ -1,0 +1,16 @@
+alias: Get Entity Attributes
+description: Fetches and returns the attributes of the entity.
+sequence:
+  - variables:
+      entity_id: >
+        {% set matched_entity = states | selectattr('name', 'equalto',
+        entity_name) | map(attribute='entity_id') | first %} {{ matched_entity
+        if matched_entity else entity }}
+      attr:
+        entity_attr: "{{ states[entity_id].attributes }}"
+  - stop: "\"\""
+    response_variable: attr
+fields:
+  entity_name:
+    example: Kids Light
+    description: Name of the entity
