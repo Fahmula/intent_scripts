@@ -22,11 +22,6 @@ These are the steps required to get the intent scripts working.
     ```
 *   **Music Assistant Integration (Optional):** The play_music script requires the [Music Assistant integration](https://www.home-assistant.io/integrations/music_assistant/). Install and configure it if you intend to use this specific script.
 
-    Add the entity ID as an alias to your media player entity you exposed to voice assistant:
-
-    ```yaml
-    Full Entity ID: media_player.living_room
-    ```
 
 ### Installation
 
@@ -40,14 +35,10 @@ These are the steps required to get the intent scripts working.
 
 2. **Create `intent_script.yaml`:**
 
-    Create a file named `intent_script.yaml` in your Home Assistant configuration directory (usually `~/.homeassistant` or where your `configuration.yaml` resides). This file will house your intent script definitions. You can also change the name to something else, just make sure to change the name in the include statement above.
+    Create a file named `intent_script.yaml` in your Home Assistant configuration directory (usually `~/.homeassistant` or where your `configuration.yaml` resides). This file will house your intent script definitions.
 
 3. **Add Supporting Scripts:**
 
     The `scripts` folder contains additional helper scripts that are required for certain intents. Add these scripts to your Home Assistant instance through the **Automations & Scenes** section (under **Settings**).
 
     **Important:** These helper scripts may need to be adjusted to match your specific entity names and device configurations. Review the scripts carefully before using them.
-
-## Usage
-
-Once installed, you can use voice commands to trigger these intents through your configured Home Assistant voice assistant. Your assistant will now be powered by the Qwen2.5:7B model (from [https://ollama.com/library/qwen2.5:7b](https://ollama.com/library/qwen2.5:7b)) running through Ollama, enabling more advanced and natural language interactions.
