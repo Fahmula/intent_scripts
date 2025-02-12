@@ -3,7 +3,7 @@ description: Plays music via music assistant
 sequence:
   - variables:
       media_player: >-
-        {{ area_entities('Living Room') | select('match', 'media_player.') |
+        {{ area_entities(area) | select('match', 'media_player.') |
         list }}
   - choose:
       - conditions:
