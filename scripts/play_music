@@ -1,6 +1,10 @@
 alias: Play Music
 description: Plays music via music assistant
 sequence:
+  - variables:
+      media_player: >-
+        {{ area_entities('Living Room') | select('match', 'media_player.') |
+        list }}
   - choose:
       - conditions:
           - condition: template
@@ -35,7 +39,7 @@ fields:
     description: The title of the song, album, artist, or playlist to play.
     example: Greatest Hits album
     required: true
-  media_player:
-    example: media_player.livin_room
-    description: The media player
+  area:
+    example: Living Room
+    description: The area
     required: true
