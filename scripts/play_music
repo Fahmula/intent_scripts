@@ -2,9 +2,15 @@ alias: Play Music
 description: Plays music via music assistant
 sequence:
   - variables:
-      media_player: >-
-        {{ area_entities(area) | select('match', 'media_player.') |
-        list }}
+      media_player: >
+        {% set media_players = integration_entities('music_assistant') %}  
+        {% set area_entities = area_entities(area) %}
+
+        {% for player in media_players %}
+          {% if player in area_entities %}
+            {{ player }}
+          {% endif %}
+        {% endfor %}
   - choose:
       - conditions:
           - condition: template
